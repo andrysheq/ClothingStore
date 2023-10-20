@@ -1,0 +1,9 @@
+server:
+  port:
+    8083
+
+spring.devtools.livereload.enabled:
+  false
+
+spring.thymeleaf.cache:
+  false
