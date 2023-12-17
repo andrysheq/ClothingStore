@@ -65,7 +65,6 @@ public class SecurityConfig {
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
-
                 // Make H2-Console non-secured; for debug purposes
                 .and()
                 .csrf()
