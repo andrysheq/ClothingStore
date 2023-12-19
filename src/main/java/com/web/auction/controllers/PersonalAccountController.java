@@ -21,7 +21,7 @@ public class PersonalAccountController {
     public String myAccount (@AuthenticationPrincipal User user,Model model){
 
         if (user == null) {
-            return "redirect:/register";
+            return "redirect:/login";
         }
 
         model.addAttribute("user", user);

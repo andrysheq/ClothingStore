@@ -24,6 +24,13 @@ public class RegistrationController {
     }
     @PostMapping
     public String processRegistration(RegistrationForm form) {
+
+        // Проверяем, существует ли пользователь с таким логином
+        if (userRepo.findByUsername(form.getUsername()) != null) {
+            return "redirect:/register?error";
+        }
+
+
         userRepo.save(form.toUser(passwordEncoder));
 
         return "redirect:/login";
