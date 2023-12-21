@@ -9,7 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -36,5 +39,21 @@ public class PersonalAccountController {
         return "personalAccount";
     }
 
+    @PostMapping("/uploadNewPhoto")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal User user) throws IOException {
+        // Допустим, у вас есть сервис photoService, который сохраняет фото
 
+        if(file.getSize()<=0){
+            return "redirect:/account?error";
+        }
+
+        try {
+            user.setPhoto(file.getBytes()); // Реализация сохранения фото в соответствующее место
+        } catch (IOException e) {
+            return "redirect:/account?error";
+        }
+
+        // Вернуть пользователя на страницу профиля после загрузки
+        return "redirect:/account";
+    }
 }
