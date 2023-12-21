@@ -48,6 +48,13 @@
         <td>Телефон</td>
         <td th:text="${user.phoneNumber}">здесь будет номер телефона</td>
     </tr>
+    <tr>
+        <td>Фото</td>
+        <td>
+            <img th:if="${photoBase64 != null}" th:src="|data:image/jpeg;base64,${photoBase64}|" width="500" height="500" alt="Фото пользователя"/>
+            <span th:if="${photoBase64 == null}">Фото не загружено</span>
+        </td>
+    </tr>
 </table>
 
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Base64;
 
 @Controller
 @RequestMapping("/account")
@@ -22,6 +23,12 @@ public class PersonalAccountController {
 
         if (user == null) {
             return "redirect:/login";
+        }
+
+        if (user.getPhoto() != null) {
+            byte[] photoBytes = user.getPhoto();
+            String photoBase64 = Base64.getEncoder().encodeToString(photoBytes);
+            model.addAttribute("photoBase64", photoBase64);
         }
 
         model.addAttribute("user", user);

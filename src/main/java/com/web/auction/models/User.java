@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Data
@@ -29,6 +30,7 @@ public class User implements UserDetails {
     private final String state;
     private final String zip;
     private final String phoneNumber;
+    private byte[] photo;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -49,5 +51,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setPhoto(byte[] photo){
+        this.photo = photo;
     }
 }
