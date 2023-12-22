@@ -13,4 +13,6 @@ public interface LotRepository
     List<Lot> findLotByUser(
             User user);
 
+    List<Lot> findAllByOrderByPlacedAtDesc();
+
 }
