@@ -30,9 +30,7 @@ public class Lot implements Serializable {
     private Date placedAt;
     @ManyToOne
     private User user;
-    @NotBlank(message="Lot name is required")
     private String nameOfLot;
-    @NotBlank(message="Price is required")
     private String price;
     private byte[] photoOfLot;
     private String city;

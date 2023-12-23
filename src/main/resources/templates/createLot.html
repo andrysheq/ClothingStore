@@ -24,7 +24,15 @@
 <div th:include="blocks/header.html :: header"></div>
 <div class="container py-4">
     <h1 class="text-center">Создать лот</h1>
-    <form method="POST" th:action="@{/lots}" th:object="${lot}" id="lotForm" enctype="multipart/form-data">
+    <form method="POST" th:action="@{/lots}" th:object="${lotForm}" id="lotForm" enctype="multipart/form-data">
+
+        <div th:if="${#fields.hasErrors('nameOfLot')}" class="error-message">
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    <li th:text="${#fields.errors('nameOfLot')}"></li>
+                </ul>
+            </div>
+        </div>
 
         <div class="mb-3 row">
             <label for="nameOfLot" class="col-sm-2 col-form-label">Название лота:</label>
@@ -33,10 +41,26 @@
             </div>
         </div>
 
+        <div th:if="${#fields.hasErrors('price')}" class="error-message">
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    <li th:text="${#fields.errors('price')}"></li>
+                </ul>
+            </div>
+        </div>
+
         <div class="mb-3 row">
             <label for="price" class="col-sm-2 col-form-label">Цена:</label>
             <div class="col-sm-6">
                 <input type="text" class="form-control" th:field="*{price}" id="price">
+            </div>
+        </div>
+
+        <div th:if="${#fields.hasErrors('photo')}" class="error-message">
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    <li th:text="${#fields.errors('photo')}"></li>
+                </ul>
             </div>
         </div>
 
