@@ -9,6 +9,7 @@ import com.web.auction.security.RegistrationForm;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,46 +24,48 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Component
 @Controller
 @RequestMapping("/lots")
 public class LotController {
 
-    private LotRepository lotRepo;
+    private final LotRepository lotRepo;
 
-    private LotProps props;
+    private final LotProps props;
+    private final LotForm form;
 
-    public LotController(LotRepository lotRepo,LotProps props) {
+    public LotController(LotRepository lotRepo,LotProps props,LotForm form) {
         this.lotRepo = lotRepo;
         this.props = props;
+        this.form = form;
     }
 
     @GetMapping("/current")
-    public String orderForm(@AuthenticationPrincipal User user,
+    public String orderForm(Model model,@AuthenticationPrincipal User user,
                             @ModelAttribute Lot lot) {
-        if (lot.getNameOfLot() == null) {
-            lot.setNameOfLot(user.getFullName());
-        }
-        if (lot.getStreet() == null) {
-            lot.setStreet(user.getStreet());
-        }
-        if (lot.getCity() == null) {
-            lot.setCity(user.getCity());
-        }
 
+//        if (lot.getStreet() == null) {
+//            lot.setStreet(user.getStreet());
+//        }
+//        if (lot.getCity() == null) {
+//            lot.setCity(user.getCity());
+//        }
 
+        model.addAttribute("lotForm", form);
         return "createLot";
     }
 
     @PostMapping
-    public String processLot(@ModelAttribute("form") @Valid LotForm form,
+    public String processLot(@ModelAttribute("lotForm") @Valid LotForm form,
                              BindingResult result,
                              @RequestParam("photo") MultipartFile photo,
-                             Model model,@Valid Lot lot, Errors errors,
+                             Model model, Errors errors,
                                SessionStatus sessionStatus,
                                @AuthenticationPrincipal User user) {
 
         if (errors.hasErrors()) {
+            model.addAttribute("errors", result.getAllErrors());
+            model.addAttribute("lotForm", form);
             return "createLot";
         }
 
@@ -82,7 +85,7 @@ public class LotController {
 
         sessionStatus.setComplete();
 
-        return "redirect:/";
+        return "redirect:/lots";
     }
 
     @GetMapping
