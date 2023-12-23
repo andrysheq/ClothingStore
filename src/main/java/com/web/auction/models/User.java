@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,13 +25,21 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+    //@NotBlank(message="Поле 'Логин' не может быть пустым")
     private final String username;
+    //@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$", message = "Некорректный формат пароля")
     private final String password;
+    //@NotBlank(message="Поле 'Имя' не может быть пустым")
     private final String fullName;
+    //@NotBlank(message="Поле 'Улица' не может быть пустым")
     private final String street;
+    //@NotBlank(message="Поле 'Город' не может быть пустым")
     private final String city;
+    //@NotBlank(message="Поле 'Область' не может быть пустым")
     private final String state;
+    //@NotBlank(message="Поле 'Индекс' не может быть пустым")
     private final String zip;
+    //@Pattern(regexp = "\\+\\d{11}", message = "Некорректный формат номера телефона")
     private final String phoneNumber;
     private byte[] photo;
 

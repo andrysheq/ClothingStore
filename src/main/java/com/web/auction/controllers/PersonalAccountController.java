@@ -24,10 +24,6 @@ public class PersonalAccountController {
     @GetMapping
     public String myAccount (@AuthenticationPrincipal User user,Model model){
 
-        if (user == null) {
-            return "redirect:/login";
-        }
-
         if (user.getPhoto() != null) {
             byte[] photoBytes = user.getPhoto();
             String photoBase64 = Base64.getEncoder().encodeToString(photoBytes);
