@@ -3,6 +3,7 @@ package com.web.auction.controllers;
 import com.web.auction.models.User;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,5 +52,32 @@ public class PersonalAccountController {
 
         // Вернуть пользователя на страницу профиля после загрузки
         return "redirect:/account";
+    }
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String adminDashboard(@AuthenticationPrincipal User user,Model model) {
+        // Логика для административной панели
+        if (user.getPhoto() != null) {
+            byte[] photoBytes = user.getPhoto();
+            String photoBase64 = Base64.getEncoder().encodeToString(photoBytes);
+            model.addAttribute("photoBase64", photoBase64);
+        }
+
+        model.addAttribute("user", user);
+        return "adminDashboard";
+    }
+
+    @GetMapping("/moderator")
+    @PreAuthorize("hasRole('MODERATOR')")
+    public String moderatorDashboard(@AuthenticationPrincipal User user,Model model) {
+        // Логика для панели модератора
+        if (user.getPhoto() != null) {
+            byte[] photoBytes = user.getPhoto();
+            String photoBase64 = Base64.getEncoder().encodeToString(photoBytes);
+            model.addAttribute("photoBase64", photoBase64);
+        }
+
+        model.addAttribute("user", user);
+        return "moderatorDashboard";
     }
 }
