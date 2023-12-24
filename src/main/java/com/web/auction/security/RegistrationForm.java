@@ -1,6 +1,8 @@
 package com.web.auction.security;
 
+import com.web.auction.data.RoleRepository;
 import com.web.auction.data.UserRepository;
+import com.web.auction.models.Role;
 import com.web.auction.models.User;
 import lombok.Data;
 import javax.validation.constraints.AssertTrue;
@@ -44,7 +46,7 @@ public class RegistrationForm {
         this.userRepository = userRepository;
     }
 
-    public User toUser(PasswordEncoder passwordEncoder) {
+    public User toUser(PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         User user = new User(
                 username, passwordEncoder.encode(password),
                 fullName, street, city, state, zip, phone);
@@ -53,6 +55,7 @@ public class RegistrationForm {
         } catch (IOException e) {
             // Обработка ошибки, если необходимо
         }
+        user.addRole(roleRepository.findById("USR"));
         return user;
     }
 
@@ -60,9 +63,4 @@ public class RegistrationForm {
     public boolean isPasswordMatching() {
         return password != null && password.equals(confirmPassword);
     }
-
-//    @AssertTrue(message = "Пользователь с таким логином уже существует")
-//    public boolean isExistingUsername() {
-//        return userRepository.findByUsername(username) != null;
-//    }
 }

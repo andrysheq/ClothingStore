@@ -1,5 +1,6 @@
 package com.web.auction.security;
 
+import com.web.auction.data.RoleRepository;
 import com.web.auction.data.UserRepository;
 import com.web.auction.security.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,16 @@ import java.io.IOException;
 @RequestMapping("/register")
 public class RegistrationController {
     private final UserRepository userRepo;
+
+    private final RoleRepository roleRepo;
     private final PasswordEncoder passwordEncoder;
     private final RegistrationForm form;
 
-    public RegistrationController(UserRepository userRepo, PasswordEncoder passwordEncoder, RegistrationForm form) {
+    public RegistrationController(UserRepository userRepo, PasswordEncoder passwordEncoder,RoleRepository roleRepo, RegistrationForm form) {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
         this.form = form;
+        this.roleRepo = roleRepo;
     }
 
 
@@ -66,7 +70,7 @@ public class RegistrationController {
 
 
 
-        userRepo.save(form.toUser(passwordEncoder));
+        userRepo.save(form.toUser(passwordEncoder,roleRepo));
 
         return "redirect:/login";
     }

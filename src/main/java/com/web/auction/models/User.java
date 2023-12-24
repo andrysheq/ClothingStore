@@ -2,6 +2,9 @@ package com.web.auction.models;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -42,10 +45,23 @@ public class User implements UserDetails {
     //@Pattern(regexp = "\\+\\d{11}", message = "Некорректный формат номера телефона")
     private final String phoneNumber;
     private byte[] photo;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles = new HashSet<>();
+
+    // Добавьте методы для управления ролями, например, добавление/удаление
+    public void addRole(Role role) {
+        this.roles.add(role);
+    }
+
+    public void removeRole(Role role) {
+        this.roles.remove(role);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
+                .collect(Collectors.toList());
     }
     @Override
     public boolean isAccountNonExpired() {
