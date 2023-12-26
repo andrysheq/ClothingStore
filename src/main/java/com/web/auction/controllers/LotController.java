@@ -70,6 +70,11 @@ public class LotController {
         }
 
         try {
+            if(photo.getSize()<=0){
+                result.rejectValue("photo", "photoNotAdded", "Вы не загрузили фото лота");
+                model.addAttribute("lotForm", form);
+                return "createLot";
+            }
             form.setPhoto(photo); // сохранить фото в объекте RegistrationForm
         }catch (Exception e){
             return "redirect:/lots/current?error";

@@ -1,9 +1,6 @@
 package com.web.auction.models;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.persistence.*;
@@ -45,6 +42,7 @@ public class User implements UserDetails {
     //@Pattern(regexp = "\\+\\d{11}", message = "Некорректный формат номера телефона")
     private final String phoneNumber;
     private byte[] photo;
+    private boolean accountNonLocked;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
@@ -56,6 +54,15 @@ public class User implements UserDetails {
     public void removeRole(Role role) {
         this.roles.remove(role);
     }
+    public boolean hasRole(String id){
+        for(Role role : roles){
+            if(role.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -69,7 +76,7 @@ public class User implements UserDetails {
     }
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountNonLocked;
     }
     @Override
     public boolean isCredentialsNonExpired() {

@@ -56,6 +56,7 @@ public class RegistrationForm {
             // Обработка ошибки, если необходимо
         }
         user.addRole(roleRepository.findById("USR"));
+        user.setAccountNonLocked(true);
         return user;
     }
 

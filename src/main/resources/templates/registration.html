@@ -50,13 +50,6 @@
       </ul>
     </div>
   </div>
-  <div th:if="${duplicateUserErrorMessage}" class="error-message">
-    <div class="alert alert-danger" role="alert">
-      <ul>
-        <li th:text="${duplicateUserErrorMessage}"></li>
-      </ul>
-    </div>
-  </div>
   <label for="username">Логин: </label>
   <input type="text" name="username" th:value="${registrationForm.username}"/><br/>
 
@@ -67,7 +60,7 @@
       </ul>
     </div>
   </div>
-  <label for="password">Пароль: </label>
+  <label for="password">Пароль (не менее 8 знаков, минимум одна заглавная буква, цифра и специальный знак.): </label>
   <input type="password" name="password" th:value="${registrationForm.password}"/><br/>
 
   <div th:if="${#fields.hasErrors('passwordMatching')}" class="error-message">
@@ -138,9 +131,15 @@
       </ul>
     </div>
   </div>
-  <label for="phone">Телефон: </label>
+  <label for="phone">Телефон (+7...): </label>
   <input type="text" name="phone" th:value="${registrationForm.phone}"/><br/>
-
+  <div th:if="${#fields.hasErrors('photo')}" class="error-message">
+    <div class="alert alert-danger" role="alert">
+      <ul>
+        <li th:text="${#fields.errors('photo')}"></li>
+      </ul>
+    </div>
+  </div>
   <label for="photo">Фото: </label>
   <input type="file" name="photo" /><br/> <!-- Поле для загрузки фото -->
 

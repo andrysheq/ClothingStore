@@ -4,16 +4,23 @@ import com.web.auction.data.RoleRepository;
 import com.web.auction.data.UserRepository;
 import com.web.auction.security.RegistrationForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 @Component
 @Controller
@@ -57,12 +64,19 @@ public class RegistrationController {
         }
 
         if(userRepo.findByUsername(form.getUsername())!=null){
-            return "redirect:/register?error=duplicateUser";
+            result.rejectValue("username", "duplicateUser", "Пользователь с таким логином уже существует");
+            model.addAttribute("registrationForm", form);
+            return "registration";
         }
 
 
 
         try {
+            if(photo.getSize()<=0){
+                result.rejectValue("photo", "photoNotAdded", "Вы не загрузили фото профиля");
+                model.addAttribute("registrationForm", form);
+                return "registration";
+            }
             form.setPhoto(photo); // сохранить фото в объекте RegistrationForm
         }catch (Exception e){
             return "redirect:/register?error";
