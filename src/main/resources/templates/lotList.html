@@ -31,7 +31,11 @@
           <p class="card-text">Имя: <span th:text="${entry.key.user.fullName}">здесь будет имя продавца</span></p>
           <p class="card-text">Город: <span th:text="${entry.key.city}">здесь будет название города продавца</span></p>
           <p class="card-text">Улица: <span th:text="${entry.key.street}">здесь будет название улицы продавца</span></p>
-
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{'/lots/' + ${entry.key.getId} + '/edit'}">Редактировать</a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

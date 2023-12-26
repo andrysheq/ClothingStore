@@ -20,10 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.web.auction.models.LotForm.getLotFormWithLot;
+
 @Component
 @Controller
 @RequestMapping("/lots")
@@ -111,6 +111,70 @@ public class LotController {
         model.addAttribute("lotPhotoMap", lotPhotoMap);
 
         return "lotList";
+    }
+
+    @PostMapping("/{id}")
+    public String updateLot(@PathVariable Long id,
+                            @ModelAttribute("lotForm") @Valid LotForm form,
+                            BindingResult result,
+                            @RequestParam("photo") MultipartFile photo,
+                            Model model, Errors errors,
+                            SessionStatus sessionStatus,
+                            @AuthenticationPrincipal User user) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("errors", result.getAllErrors());
+            model.addAttribute("lotForm", form);
+            Lot lot = lotRepo.findLotById(id);
+            model.addAttribute("lot", lot);
+            return "editLot";
+        }
+
+//        try {
+//            if(photo.getSize() <= 0) {
+//                result.rejectValue("photo", "photoNotAdded", "Вы не загрузили фото лота");
+//                model.addAttribute("lotForm", form);
+//                Lot lot = lotRepo.findLotById(id);
+//                model.addAttribute("lot", lot);
+//                return "editLot";
+//            }
+//            form.setPhoto(photo); // сохранить фото в объекте RegistrationForm
+//        } catch (Exception e) {
+//            return "redirect:/lots/{id}/edit?error";
+//        }
+        Lot lotToUpdate = form.toLot();
+        try {
+            if(photo.getSize() > 0) {
+                form.setPhoto(photo);
+            }else{
+                Lot lot = lotRepo.findLotById(id);
+                lotToUpdate.setPhotoOfLot(lot.getPhotoOfLot());
+            }
+        } catch (Exception e) {
+            return "redirect:/lots/{id}/edit?error";
+        }
+        lotToUpdate.setId(id);
+
+        lotToUpdate.setUser(user);
+        lotToUpdate.setCity(user.getCity());
+        lotToUpdate.setStreet(user.getStreet());
+
+        lotRepo.save(lotToUpdate);
+
+        sessionStatus.setComplete();
+
+        return "redirect:/lots";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editLot(@PathVariable Long id, Model model, @AuthenticationPrincipal User user) {
+        Lot lot = lotRepo.findLotById(id);
+        if(!lot.getUser().getId().equals(user.getId())){
+            return "redirect:/";
+        }
+        model.addAttribute("lot", lot);
+        model.addAttribute("lotForm", getLotFormWithLot(lot));
+        return "editLot";
     }
 
 }
