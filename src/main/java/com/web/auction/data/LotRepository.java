@@ -15,4 +15,6 @@ public interface LotRepository
 
     List<Lot> findAllByOrderByPlacedAtDesc();
 
+    Lot findLotById(Long id);
+
 }
