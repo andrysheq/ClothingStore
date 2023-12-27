@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru" data-bs-theme="dark"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Публикация новости в системе "Аукцион58"</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      /*background-color: #222 !important;*/
+      margin-top: 40px;
+    }
+
+  </style>
+</head>
+
+<body class="bg-dark text-light">
+<div th:include="blocks/header.html :: header"></div>
+<div class="container py-4">
+  <h1 class="text-center">Опубликовать новость</h1>
+  <form method="POST" th:action="@{/moderator-panel}" th:object="${newsForm}" id="newsForm" enctype="multipart/form-data">
+
+    <div th:if="${#fields.hasErrors('nameOfNews')}" class="error-message">
+      <div class="alert alert-danger" role="alert">
+        <ul>
+          <li th:text="${#fields.errors('nameOfNews')}"></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label for="nameOfNews" class="col-sm-2 col-form-label">Название новости:</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" th:field="*{nameOfNews}" id="nameOfNews">
+      </div>
+    </div>
+
+    <div th:if="${#fields.hasErrors('text')}" class="error-message">
+      <div class="alert alert-danger" role="alert">
+        <ul>
+          <li th:text="${#fields.errors('text')}"></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <label for="text" class="col-sm-2 col-form-label">Текст:</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" th:field="*{text}" id="text">
+      </div>
+    </div>
+
+    <div class="mb-3 row">
+      <div class="col-sm-10">
+        <button type="submit" class="btn btn-primary">Создать новость</button>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+
+</html>

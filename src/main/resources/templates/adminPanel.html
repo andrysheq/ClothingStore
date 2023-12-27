@@ -41,13 +41,23 @@
             <td th:text="${user.getUsername()}">Логин пользователя</td>
             <td th:text="${user.getFullName()}">Полное имя пользователя</td>
             <td>
-                <span th:text="${user.isAccountNonLocked} ? 'Активный аккаунт' : 'Заблокирован'"></span>
+                <span th:text="${user.isAccountNonLocked()} ? 'Активный аккаунт' : 'Заблокирован'"></span>
             </td>
             <td th:text="${user.getId()}">ID</td>
             <td>
-                <span th:each="role, iterStat : ${user.getAuthorities()}" th:text="${role} + ${iterStat.last ? '' : ', '}"></span>
+                <span th:text="${user.getRole()}"></span>
             </td>
-
+            <td>
+                <form th:action="@{/admin-panel/change-role}" method="post">
+                    <input type="hidden" name="userId" th:value="${user.id}">
+                    <select name="newRoleId">
+                        <option th:selected="${user.getRole() == 'ROLE_ADMIN'}" value="ADM">Администратор</option>
+                        <option th:selected="${user.getRole() == 'ROLE_MODERATOR'}" value="MDR">Модератор</option>
+                        <option th:selected="${user.getRole() == 'ROLE_USER'}" value="USR">Пользователь</option>
+                    </select>
+                    <input type="submit" value="Изменить роль">
+                </form>
+            <td>
             <td>
                 <form th:action="@{/admin-panel/block-user}" method="post" th:if="${user.accountNonLocked}">
                     <input type="hidden" name="userId" th:value="${user.id}">
@@ -58,32 +68,32 @@
                     <input type="submit" value="Разблокировать">
                 </form>
             </td>
-            <td>
-                <form th:action="@{/admin-panel/toggle-moderator}" method="post">
-                    <input type="hidden" name="userId" th:value="${user.id}">
-                    <th:block th:if="${not user.hasRole('MDR')}">
-                        <input type="hidden" name="makeModerator" value="true">
-                        <input type="submit" value="Сделать модератором">
-                    </th:block>
-                    <th:block th:if="${user.hasRole('MDR')}">
-                        <input type="hidden" name="makeModerator" value="false">
-                        <input type="submit" value="Убрать роль модератора">
-                    </th:block>
-                </form>
-            <td>
-            <td>
-                <form th:action="@{/admin-panel/toggle-admin}" method="post">
-                    <input type="hidden" name="userId" th:value="${user.id}">
-                    <th:block th:if="${not user.hasRole('ADM')}">
-                        <input type="hidden" name="makeAdmin" value="true">
-                        <input type="submit" value="Сделать администратором">
-                    </th:block>
-                    <th:block th:if="${user.hasRole('ADM')}">
-                        <input type="hidden" name="makeAdmin" value="false">
-                        <input type="submit" value="Убрать роль администратора">
-                    </th:block>
-                </form>
-            <td>
+<!--            <td>-->
+<!--                <form th:action="@{/admin-panel/toggle-moderator}" method="post">-->
+<!--                    <input type="hidden" name="userId" th:value="${user.id}">-->
+<!--                    <th:block th:if="${not user.hasRole('MDR')}">-->
+<!--                        <input type="hidden" name="makeModerator" value="true">-->
+<!--                        <input type="submit" value="Сделать модератором">-->
+<!--                    </th:block>-->
+<!--                    <th:block th:if="${user.hasRole('MDR')}">-->
+<!--                        <input type="hidden" name="makeModerator" value="false">-->
+<!--                        <input type="submit" value="Убрать роль модератора">-->
+<!--                    </th:block>-->
+<!--                </form>-->
+<!--            <td>-->
+<!--            <td>-->
+<!--                <form th:action="@{/admin-panel/toggle-admin}" method="post">-->
+<!--                    <input type="hidden" name="userId" th:value="${user.id}">-->
+<!--                    <th:block th:if="${not user.hasRole('ADM')}">-->
+<!--                        <input type="hidden" name="makeAdmin" value="true">-->
+<!--                        <input type="submit" value="Сделать администратором">-->
+<!--                    </th:block>-->
+<!--                    <th:block th:if="${user.hasRole('ADM')}">-->
+<!--                        <input type="hidden" name="makeAdmin" value="false">-->
+<!--                        <input type="submit" value="Убрать роль администратора">-->
+<!--                    </th:block>-->
+<!--                </form>-->
+<!--            <td>-->
             <td>
                 <form th:action="@{/admin-panel/delete-user}" method="post">
                     <input type="hidden" name="userId" th:value="${user.id}">

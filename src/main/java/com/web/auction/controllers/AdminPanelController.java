@@ -59,11 +59,18 @@ public class AdminPanelController {
 
         User user = userRepo.findById(userId).orElse(null);
         if (user != null) {
-            // Изменение роли пользователя
-            // Например, user.setRole(newRole); или user.getRoles().clear(); user.addRole(newRole);
-            // Сохранение пользователя в репозитории userRepo.save(user);
-
-            user.addRole(roleRepo.findById(newRoleId));
+            user.removeAllRoles();
+            if(newRoleId.equals("USR")){
+                user.addRole(roleRepo.findById("USR"));
+            } else if (newRoleId.equals("MDR")){
+                user.addRole(roleRepo.findById("USR"));
+                user.addRole(roleRepo.findById("MDR"));
+            }else if (newRoleId.equals("ADM")){
+                user.addRole(roleRepo.findById("USR"));
+                user.addRole(roleRepo.findById("MDR"));
+                user.addRole(roleRepo.findById("ADM"));
+            }
+            userRepo.save(user);
 
             // Вернуть пользователя на страницу администратора после изменения
             return "redirect:/admin-panel";
@@ -127,42 +134,42 @@ public class AdminPanelController {
         // Если пользователь не найден, вернуть на страницу с сообщением об ошибке или другую страницу
         return "redirect:/admin-panel?error=UserNotFound";
     }
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/toggle-moderator")
-    public String toggleModeratorStatus(@RequestParam("userId") Long userId, @RequestParam("makeModerator") boolean makeModerator) {
-        User user = userRepo.findById(userId).orElse(null);
-
-        if (user != null) {
-            if (makeModerator) {
-                // Если нужно сделать пользователя модератором, добавьте ему соответствующую роль
-                Role moderatorRole = roleRepo.findById("MDR"); // Получение роли модератора из репозитория ролей
-                user.addRole(moderatorRole);
-            } else {
-                // Если нужно убрать у пользователя статус модератора, удалите роль модератора
-                Role moderatorRole = roleRepo.findById("MDR"); // Получение роли модератора из репозитория ролей
-                user.removeRole(moderatorRole);
-            }
-            userRepo.save(user); // Сохранение обновленной информации о пользователе
-        }
-
-        return "redirect:/admin-panel"; // Перенаправление на страницу админ-панели после выполнения операции
-    }
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/toggle-admin")
-    public String toggleAdministratorStatus(@RequestParam("userId") Long userId, @RequestParam("makeAdmin") boolean makeAdmin) {
-        User user = userRepo.findById(userId).orElse(null);
-        Role adminRole = roleRepo.findById("ADM");
-        if (user != null) {
-            if (makeAdmin) {
-                user.addRole(adminRole);
-            } else {
-                user.removeRole(adminRole);
-            }
-            userRepo.save(user); // Сохранение обновленной информации о пользователе
-        }
-
-        return "redirect:/admin-panel"; // Перенаправление на страницу админ-панели после выполнения операции
-    }
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PostMapping("/toggle-moderator")
+//    public String toggleModeratorStatus(@RequestParam("userId") Long userId, @RequestParam("makeModerator") boolean makeModerator) {
+//        User user = userRepo.findById(userId).orElse(null);
+//
+//        if (user != null) {
+//            if (makeModerator) {
+//                // Если нужно сделать пользователя модератором, добавьте ему соответствующую роль
+//                Role moderatorRole = roleRepo.findById("MDR"); // Получение роли модератора из репозитория ролей
+//                user.addRole(moderatorRole);
+//            } else {
+//                // Если нужно убрать у пользователя статус модератора, удалите роль модератора
+//                Role moderatorRole = roleRepo.findById("MDR"); // Получение роли модератора из репозитория ролей
+//                user.removeRole(moderatorRole);
+//            }
+//            userRepo.save(user); // Сохранение обновленной информации о пользователе
+//        }
+//
+//        return "redirect:/admin-panel"; // Перенаправление на страницу админ-панели после выполнения операции
+//    }
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PostMapping("/toggle-admin")
+//    public String toggleAdministratorStatus(@RequestParam("userId") Long userId, @RequestParam("makeAdmin") boolean makeAdmin) {
+//        User user = userRepo.findById(userId).orElse(null);
+//        Role adminRole = roleRepo.findById("ADM");
+//        if (user != null) {
+//            if (makeAdmin) {
+//                user.addRole(adminRole);
+//            } else {
+//                user.removeRole(adminRole);
+//            }
+//            userRepo.save(user); // Сохранение обновленной информации о пользователе
+//        }
+//
+//        return "redirect:/admin-panel"; // Перенаправление на страницу админ-панели после выполнения операции
+//    }
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
 //    @PostMapping("/{id}")
 //    public String updateUser(@PathVariable Long id,

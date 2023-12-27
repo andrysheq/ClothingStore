@@ -63,12 +63,26 @@ public class User implements UserDetails {
         return false;
     }
 
+    public void removeAllRoles(){
+        roles.clear();
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
                 .collect(Collectors.toList());
+    }
+
+    public String getRole() {
+        if (roles.stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"))) {
+            return "ROLE_ADMIN";
+        } else if (roles.stream().anyMatch(role -> role.getAuthority().equals("ROLE_MODERATOR"))) {
+            return "ROLE_MODERATOR";
+        } else {
+            return "ROLE_USER"; // Или любую другую роль по умолчанию
+        }
     }
     @Override
     public boolean isAccountNonExpired() {
