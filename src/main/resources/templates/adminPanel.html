@@ -68,45 +68,15 @@
                     <input type="submit" value="Разблокировать">
                 </form>
             </td>
-<!--            <td>-->
-<!--                <form th:action="@{/admin-panel/toggle-moderator}" method="post">-->
-<!--                    <input type="hidden" name="userId" th:value="${user.id}">-->
-<!--                    <th:block th:if="${not user.hasRole('MDR')}">-->
-<!--                        <input type="hidden" name="makeModerator" value="true">-->
-<!--                        <input type="submit" value="Сделать модератором">-->
-<!--                    </th:block>-->
-<!--                    <th:block th:if="${user.hasRole('MDR')}">-->
-<!--                        <input type="hidden" name="makeModerator" value="false">-->
-<!--                        <input type="submit" value="Убрать роль модератора">-->
-<!--                    </th:block>-->
-<!--                </form>-->
-<!--            <td>-->
-<!--            <td>-->
-<!--                <form th:action="@{/admin-panel/toggle-admin}" method="post">-->
-<!--                    <input type="hidden" name="userId" th:value="${user.id}">-->
-<!--                    <th:block th:if="${not user.hasRole('ADM')}">-->
-<!--                        <input type="hidden" name="makeAdmin" value="true">-->
-<!--                        <input type="submit" value="Сделать администратором">-->
-<!--                    </th:block>-->
-<!--                    <th:block th:if="${user.hasRole('ADM')}">-->
-<!--                        <input type="hidden" name="makeAdmin" value="false">-->
-<!--                        <input type="submit" value="Убрать роль администратора">-->
-<!--                    </th:block>-->
-<!--                </form>-->
-<!--            <td>-->
             <td>
                 <form th:action="@{/admin-panel/delete-user}" method="post">
                     <input type="hidden" name="userId" th:value="${user.id}">
                     <input type="submit" value="Удалить пользователя">
                 </form>
             </td>
-<!--            <td>-->
-<!--                <ul class="nav nav-tabs">-->
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link" th:href="@{'/admin-panel/' + ${user.id} + '/edit'}">Редактировать данные</a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </td>-->
+            <td>
+                <a class="nav-link" th:href="@{'/admin-panel/' + ${user.getId()} + '/edit-user'}">Редактировать</a>
+            </td>
         </tr>
         </tbody>
     </table>

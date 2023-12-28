@@ -6,6 +6,7 @@ import com.web.auction.models.Lot;
 import com.web.auction.models.LotForm;
 import com.web.auction.models.Role;
 import com.web.auction.models.User;
+import com.web.auction.security.EditUserForm;
 import com.web.auction.security.RegistrationForm;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -27,6 +28,7 @@ import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 
+import static com.web.auction.models.LotForm.convert;
 import static com.web.auction.models.LotForm.getLotFormWithLot;
 
 @Component
@@ -170,49 +172,81 @@ public class AdminPanelController {
 //
 //        return "redirect:/admin-panel"; // Перенаправление на страницу админ-панели после выполнения операции
 //    }
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @PostMapping("/{id}")
-//    public String updateUser(@PathVariable Long id,
-//                            @ModelAttribute("regForm") @Valid RegistrationForm form,
-//                            BindingResult result,
-//                            @RequestParam("photo") MultipartFile photo,
-//                            Model model, Errors errors,
-//                            SessionStatus sessionStatus,
-//                            @AuthenticationPrincipal User user) {
-//
-//        if (errors.hasErrors()) {
-//            model.addAttribute("errors", result.getAllErrors());
-//            model.addAttribute("regForm", form);
-//            User userToEdit = userRepo.findUserById(id);
-//            model.addAttribute("user", userToEdit);
-//            return "editUser";
-//        }
-//
-//        User userToUpdate = form.toUser(passwordEncoder,roleRepo);
-//        try {
-//            if(photo.getSize() > 0) {
-//                form.setPhoto(photo);
-//            }else{
-//                User userFromDB = userRepo.findUserById(id);
-//                userToUpdate.setPhoto(userFromDB.getPhoto());
-//            }
-//        } catch (Exception e) {
-//            return "redirect:/admin-panel/{id}/edit?error";
-//        }
-//        userToUpdate.setId(id);
-//
-//        userRepo.save(userToUpdate);
-//
-//        sessionStatus.setComplete();
-//
-//        return "redirect:/lots";
-//    }
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @GetMapping("/{id}/edit")
-//    public String editUser(@PathVariable Long id, Model model, @AuthenticationPrincipal User user) {
-//        User userToUpdate = userRepo.findUserById(id);
-//        model.addAttribute("user", userToUpdate);
-//        model.addAttribute("userForm", getUserFormWithUser(userToUpdate));
-//        return "editLot";
-//    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/{id}")
+    public String updateUser(@PathVariable Long id,
+                            @ModelAttribute("userForm") @Valid EditUserForm form,
+                            BindingResult result,
+                            @RequestParam("photo") MultipartFile photo,
+                            Model model, Errors errors,
+                            SessionStatus sessionStatus,
+                            @AuthenticationPrincipal User user) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("errors", result.getAllErrors());
+            model.addAttribute("userForm", form);
+            User userToEdit = userRepo.findUserById(id);
+            model.addAttribute("user", userToEdit);
+            return "editUser";
+        }
+
+        if(userRepo.findByUsername(form.getUsername())!=null){
+            result.rejectValue("username", "duplicateUser", "Пользователь с таким логином уже существует");
+            model.addAttribute("userForm", form);
+            User userToEdit = userRepo.findUserById(id);
+            model.addAttribute("user", userToEdit);
+            return "editUser";
+        }
+
+        User userToUpdate = form.toUser(passwordEncoder,roleRepo);
+        try {
+            if(photo.getSize() > 0) {
+                form.setPhoto(photo);
+            }else{
+                User userFromDB = userRepo.findUserById(id);
+                userToUpdate.setPhoto(userFromDB.getPhoto());
+            }
+        } catch (Exception e) {
+            return "redirect:/admin-panel/{id}/edit?error";
+        }
+        userToUpdate.setId(id);
+
+        User userFromDB = userRepo.findUserById(id);
+
+        userToUpdate.setAccountNonLocked(true);
+        userToUpdate.setRoles(userFromDB.getRoles());
+        userToUpdate.setPassword(userFromDB.getPassword());
+
+        userRepo.save(userToUpdate);
+
+        sessionStatus.setComplete();
+
+        return "redirect:/admin-panel";
+    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/{id}/edit-user")
+    public String editUser(@PathVariable Long id, Model model, @AuthenticationPrincipal User user) {
+        User userToUpdate = userRepo.findUserById(id);
+        model.addAttribute("user", userToUpdate);
+        EditUserForm form = new EditUserForm(userRepo);
+        form.setCity(userToUpdate.getCity());
+        form.setPhone(userToUpdate.getPhoneNumber());
+        form.setState(userToUpdate.getState());
+        form.setZip(userToUpdate.getZip());
+        form.setFullName(userToUpdate.getFullName());
+        form.setStreet(userToUpdate.getStreet());
+        form.setUsername(userToUpdate.getUsername());
+        byte[] yourByteArray = userToUpdate.getPhoto();
+        String fileName = "example.txt";
+        MultipartFile multipartFile = null;
+        try {
+            multipartFile = convert(yourByteArray, fileName);
+            // Дальнейшие действия с multipartFile
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        form.setPhoto(multipartFile);
+        model.addAttribute("userForm", form);
+        return "editUser";
+    }
 }

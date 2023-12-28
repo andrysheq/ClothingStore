@@ -51,7 +51,7 @@
     </div>
   </div>
   <label for="username">Логин: </label>
-  <input type="text" name="username" th:value="${registrationForm.username}"/><br/>
+  <input type="text" name="username" id="username" th:value="${registrationForm.username}"/><br/>
 
   <div th:if="${#fields.hasErrors('password')}" class="error-message">
     <div class="alert alert-danger" role="alert">
@@ -61,7 +61,7 @@
     </div>
   </div>
   <label for="password">Пароль (не менее 8 знаков, минимум одна заглавная буква, цифра и специальный знак.): </label>
-  <input type="password" name="password" th:value="${registrationForm.password}"/><br/>
+  <input type="password" name="password" id="password" th:value="${registrationForm.password}"/><br/>
 
   <div th:if="${#fields.hasErrors('passwordMatching')}" class="error-message">
     <div class="alert alert-danger" role="alert">
@@ -72,7 +72,7 @@
   </div>
 
   <label for="confirmPassword">Подтвердите пароль: </label>
-  <input type="password" name="confirmPassword" th:value="${registrationForm.confirmPassword}"/><br/>
+  <input type="password" name="confirmPassword" id="confirmPassword" th:value="${registrationForm.confirmPassword}"/><br/>
 
   <div th:if="${#fields.hasErrors('fullName')}" class="error-message">
     <div class="alert alert-danger" role="alert">
@@ -82,7 +82,7 @@
     </div>
   </div>
   <label for="fullName">Ваше имя: </label>
-  <input type="text" name="fullName" th:value="${registrationForm.fullName}"/><br/>
+  <input type="text" name="fullName" id="fullName" th:value="${registrationForm.fullName}"/><br/>
 
   <div th:if="${#fields.hasErrors('street')}" class="error-message">
     <div class="alert alert-danger" role="alert">
@@ -92,7 +92,7 @@
     </div>
   </div>
   <label for="street">Улица: </label>
-  <input type="text" name="street" th:value="${registrationForm.street}"/><br/>
+  <input type="text" name="street" id="street" th:value="${registrationForm.street}"/><br/>
 
   <div th:if="${#fields.hasErrors('city')}" class="error-message">
     <div class="alert alert-danger" role="alert">
@@ -102,7 +102,7 @@
     </div>
   </div>
   <label for="city">Город: </label>
-  <input type="text" name="city" th:value="${registrationForm.city}"/><br/>
+  <input type="text" name="city" id="city" th:value="${registrationForm.city}"/><br/>
 
   <div th:if="${#fields.hasErrors('state')}" class="error-message">
     <div class="alert alert-danger" role="alert">
@@ -112,7 +112,7 @@
     </div>
   </div>
   <label for="state">Область: </label>
-  <input type="text" name="state" th:value="${registrationForm.state}"/><br/>
+  <input type="text" name="state" id="state" th:value="${registrationForm.state}"/><br/>
 
   <div th:if="${#fields.hasErrors('zip')}" class="error-message">
     <div class="alert alert-danger" role="alert">
@@ -122,7 +122,7 @@
     </div>
   </div>
   <label for="zip">Индекс: </label>
-  <input type="text" name="zip" th:value="${registrationForm.zip}"/><br/>
+  <input type="text" name="zip" id="zip" th:value="${registrationForm.zip}"/><br/>
 
   <div th:if="${#fields.hasErrors('phone')}" class="error-message">
     <div class="alert alert-danger" role="alert">
@@ -132,7 +132,7 @@
     </div>
   </div>
   <label for="phone">Телефон (+7...): </label>
-  <input type="text" name="phone" th:value="${registrationForm.phone}"/><br/>
+  <input type="text" name="phone" id="phone" th:value="${registrationForm.phone}"/><br/>
   <div th:if="${#fields.hasErrors('photo')}" class="error-message">
     <div class="alert alert-danger" role="alert">
       <ul>
@@ -141,7 +141,7 @@
     </div>
   </div>
   <label for="photo">Фото: </label>
-  <input type="file" name="photo" /><br/> <!-- Поле для загрузки фото -->
+  <input type="file" name="photo" id="photo" /><br/> <!-- Поле для загрузки фото -->
 
   <input type="submit" value="Зарегистрироваться"/>
 </form>

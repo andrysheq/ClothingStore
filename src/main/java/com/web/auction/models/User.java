@@ -18,33 +18,54 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Data
-@NoArgsConstructor(access=AccessLevel.PRIVATE, force=true)
-@RequiredArgsConstructor
 public class User implements UserDetails {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     //@NotBlank(message="Поле 'Логин' не может быть пустым")
-    private final String username;
+    private String username;
     //@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$", message = "Некорректный формат пароля")
-    private final String password;
+    private String password;
     //@NotBlank(message="Поле 'Имя' не может быть пустым")
-    private final String fullName;
+    private String fullName;
     //@NotBlank(message="Поле 'Улица' не может быть пустым")
-    private final String street;
+    private String street;
     //@NotBlank(message="Поле 'Город' не может быть пустым")
-    private final String city;
+    private String city;
     //@NotBlank(message="Поле 'Область' не может быть пустым")
-    private final String state;
+    private String state;
     //@NotBlank(message="Поле 'Индекс' не может быть пустым")
-    private final String zip;
+    private String zip;
     //@Pattern(regexp = "\\+\\d{11}", message = "Некорректный формат номера телефона")
-    private final String phoneNumber;
+    private String phoneNumber;
     private byte[] photo;
     private boolean accountNonLocked;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
+
+    public User(String username, String fullName, String street, String city, String state, String zip, String phoneNumber) {
+        this.username = username;
+        this.fullName = fullName;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public User(String username, String password, String fullName, String street, String city, String state, String zip, String phoneNumber) {
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public User(){}
 
     // Добавьте методы для управления ролями, например, добавление/удаление
     public void addRole(Role role) {
