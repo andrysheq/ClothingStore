@@ -2,8 +2,6 @@ package com.web.auction.security;
 
 import com.web.auction.data.RoleRepository;
 import com.web.auction.data.UserRepository;
-import com.web.auction.models.Lot;
-import com.web.auction.models.LotForm;
 import com.web.auction.models.User;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.io.IOException;
 
-import static com.web.auction.models.LotForm.convert;
 
 @Component
 @Data

@@ -2,8 +2,6 @@ package com.web.auction.controllers;
 
 import com.web.auction.data.RoleRepository;
 import com.web.auction.data.UserRepository;
-import com.web.auction.models.Lot;
-import com.web.auction.models.LotForm;
 import com.web.auction.models.Role;
 import com.web.auction.models.User;
 import com.web.auction.security.EditUserForm;
@@ -28,8 +26,8 @@ import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 
-import static com.web.auction.models.LotForm.convert;
-import static com.web.auction.models.LotForm.getLotFormWithLot;
+import static com.web.auction.models.ProductForm.convert;
+
 
 @Component
 @Controller
@@ -136,42 +134,6 @@ public class AdminPanelController {
         // Если пользователь не найден, вернуть на страницу с сообщением об ошибке или другую страницу
         return "redirect:/admin-panel?error=UserNotFound";
     }
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @PostMapping("/toggle-moderator")
-//    public String toggleModeratorStatus(@RequestParam("userId") Long userId, @RequestParam("makeModerator") boolean makeModerator) {
-//        User user = userRepo.findById(userId).orElse(null);
-//
-//        if (user != null) {
-//            if (makeModerator) {
-//                // Если нужно сделать пользователя модератором, добавьте ему соответствующую роль
-//                Role moderatorRole = roleRepo.findById("MDR"); // Получение роли модератора из репозитория ролей
-//                user.addRole(moderatorRole);
-//            } else {
-//                // Если нужно убрать у пользователя статус модератора, удалите роль модератора
-//                Role moderatorRole = roleRepo.findById("MDR"); // Получение роли модератора из репозитория ролей
-//                user.removeRole(moderatorRole);
-//            }
-//            userRepo.save(user); // Сохранение обновленной информации о пользователе
-//        }
-//
-//        return "redirect:/admin-panel"; // Перенаправление на страницу админ-панели после выполнения операции
-//    }
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    @PostMapping("/toggle-admin")
-//    public String toggleAdministratorStatus(@RequestParam("userId") Long userId, @RequestParam("makeAdmin") boolean makeAdmin) {
-//        User user = userRepo.findById(userId).orElse(null);
-//        Role adminRole = roleRepo.findById("ADM");
-//        if (user != null) {
-//            if (makeAdmin) {
-//                user.addRole(adminRole);
-//            } else {
-//                user.removeRole(adminRole);
-//            }
-//            userRepo.save(user); // Сохранение обновленной информации о пользователе
-//        }
-//
-//        return "redirect:/admin-panel"; // Перенаправление на страницу админ-панели после выполнения операции
-//    }
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/{id}")
     public String updateUser(@PathVariable Long id,

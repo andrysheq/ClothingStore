@@ -35,46 +35,41 @@
 <body class="bg-dark font-montserrat">
     <div th:include="blocks/header.html :: header"></div>
 
-    <script>
-        function updateTime() {
-            const evtSource = new EventSource('/time');
-            evtSource.onmessage = function (event) {
-                document.getElementById('clock').innerText = event.data;
-            };
+<!--    <script>-->
+<!--        function updateTime() {-->
+<!--            const evtSource = new EventSource('/time');-->
+<!--            evtSource.onmessage = function (event) {-->
+<!--                document.getElementById('clock').innerText = event.data;-->
+<!--            };-->
 
-            evtSource.onerror = function (event) {
-                evtSource.close();
-            };
-        }
+<!--            evtSource.onerror = function (event) {-->
+<!--                evtSource.close();-->
+<!--            };-->
+<!--        }-->
 
-        setInterval(updateTime, 1000);
-    </script>
+<!--        setInterval(updateTime, 1000);-->
+<!--    </script>-->
 
     <main class="container font-montserrat">
-        <div class="container d-flex justify-content-between font-montserrat">
-            <div>
-                <p>Всего посещений:<h1 th:text="${visitCount}">counter</h1></p>
-            </div>
-            <div>
-                <p>Текущее время: <span id="clock"></span></p>
-            </div>
-        </div>
+<!--        <div class="container d-flex justify-content-between font-montserrat">-->
+<!--            <div>-->
+<!--                <p>Всего посещений:<h1 th:text="${visitCount}">counter</h1></p>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <p>Текущее время: <span id="clock"></span></p>-->
+<!--            </div>-->
+<!--        </div>-->
 
 
-        <h1>Все лоты:</h1>
+        <h1>Вся одежда:</h1>
 
         <div class="row row-cols-1 row-cols-md-3">
-            <div th:each="entry : ${lotPhotoMap}" class="col">
+            <div th:each="entry : ${productPhotoMap}" class="col">
                 <div class="card mb-3 h-100 card-dark">
                     <img th:if="${entry.value != null}" th:src="|data:image/jpeg;base64,${entry.value}|" class="card-img-top img-fluid rounded" alt="Фото лота">
                     <div class="card-body d-flex flex-column card-dark">
-                        <h5 class="card-title" th:text="${entry.key.nameOfLot}">здесь будет название города</h5>
+                        <h5 class="card-title" th:text="${entry.key.name}">здесь будет название позиции</h5>
                         <p class="card-text">Цена: <span th:text="${entry.key.price + ' ₽'}">здесь будет цена в рублях</span></p>
-                        <p class="card-text">Логин продавца: <span th:text="${entry.key.user.username}">здесь будет логин продавца</span></p>
-                        <p class="card-text">Имя продавца: <span th:text="${entry.key.user.fullName}">здесь будет имя продавца</span></p>
-                        <p class="card-text">Город продавца: <span th:text="${entry.key.city}">здесь будет название города продавца</span></p>
-                        <p class="card-text">Улица продавца: <span th:text="${entry.key.street}">здесь будет название улицы продавца</span></p>
-
                     </div>
                 </div>
             </div>

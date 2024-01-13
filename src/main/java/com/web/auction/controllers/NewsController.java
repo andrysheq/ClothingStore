@@ -1,6 +1,5 @@
 package com.web.auction.controllers;
 
-import com.web.auction.data.LotRepository;
 import com.web.auction.data.NewsRepository;
 import com.web.auction.models.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.web.auction.models.LotForm.getLotFormWithLot;
 
 @Component
 @Controller
@@ -41,7 +39,7 @@ public class NewsController {
     }
 
     @GetMapping("/{id}")
-    public String updateLot(@PathVariable Long id,
+    public String openNews(@PathVariable Long id,
                             Model model) {
         News news = newsRepo.findNewsById(id);
         model.addAttribute("news",news);

@@ -22,7 +22,7 @@
 <div th:include="blocks/header.html :: header"></div>
 <div class="container py-4">
   <h1 class="text-center">Редактировать новость</h1>
-  <form th:action="@{'/moderator-panel/' + ${news.getId()}}" th:object="${newsForm}" id="newsForm" method="post" enctype="multipart/form-data">
+  <form th:action="@{'/news-panel/' + ${news.getId()}}" th:object="${newsForm}" id="newsForm" method="post" enctype="multipart/form-data">
     <input type="hidden" name="_method" value="patch">
 
     <div th:if="${#fields.hasErrors('nameOfNews')}" class="error-message">
