@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.web.auction.models.ProductForm.getProductFormWithProduct;
 
@@ -43,13 +46,18 @@ public class ProductPanelController {
 //        if (lot.getCity() == null) {
 //            lot.setCity(user.getCity());
 //        }
-
-        model.addAttribute("productsForm", form);
+        String gender = "";
+        String category = "";
+        model.addAttribute("gender", gender);
+        model.addAttribute("category", category);
+        model.addAttribute("productForm", form);
         return "createProduct";
     }
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PostMapping
     public String processProduct(@ModelAttribute("productForm") @Valid ProductForm form,
+                                 @ModelAttribute("category") String category,
+                                 @ModelAttribute("gender") String gender,
                               BindingResult result,
                               Model model, Errors errors,
                               SessionStatus sessionStatus,
@@ -63,6 +71,9 @@ public class ProductPanelController {
 
         Product productToSave = form.toProduct();
 
+        productToSave.setCategory(category);
+        productToSave.setGender(gender);
+
         productRepo.save(productToSave);
 
         sessionStatus.setComplete();
@@ -74,17 +85,26 @@ public class ProductPanelController {
     public String productsForModerator(
             @AuthenticationPrincipal User user, Model model) {
 
+        List<Product> products = productRepo.findAll();
 
-        List<Product> productList = productRepo.findAll();
+        Map<Product, String> productPhotoMap = new HashMap<>();
 
-        model.addAttribute("productList", productList);
+        for (Product product : products) {
+            byte[] photoBytes = product.getPhotoOfProduct();
+            String photoBase64 = Base64.getEncoder().encodeToString(photoBytes);
+            productPhotoMap.put(product, photoBase64);
+        }
 
-        return "productListForModer";
+        //model.addAttribute("products", products);
+        model.addAttribute("productPhotoMap", productPhotoMap);
+        return "productsPanel";
     }
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PostMapping("/{id}")
     public String updateNews(@PathVariable Long id,
                              @ModelAttribute("productForm") @Valid ProductForm form,
+                             @ModelAttribute("category") String category,
+                             @ModelAttribute("gender") String gender,
                              BindingResult result,
                              Model model, Errors errors,
                              SessionStatus sessionStatus,
@@ -101,6 +121,8 @@ public class ProductPanelController {
         Product productToUpdate = form.toProduct();
 
         productToUpdate.setId(id);
+        productToUpdate.setGender(gender);
+        productToUpdate.setCategory(category);
 
         productRepo.save(productToUpdate);
 
@@ -112,13 +134,17 @@ public class ProductPanelController {
     @GetMapping("/{id}/edit")
     public String editProducts(@PathVariable Long id, Model model, @AuthenticationPrincipal User user) {
         Product product = productRepo.findProductById(id);
+        String gender = product.getGender();
+        String category = product.getCategory();
+        model.addAttribute("gender", gender);
+        model.addAttribute("category", category);
         model.addAttribute("product", product);
         model.addAttribute("productForm", getProductFormWithProduct(product));
         return "editProduct";
     }
 
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PostMapping("/delete-news")
+    @PostMapping("/delete-product")
     public String deleteProduct(@RequestParam("productId") Long productId) {
 
         Product product = productRepo.findById(productId).orElse(null);

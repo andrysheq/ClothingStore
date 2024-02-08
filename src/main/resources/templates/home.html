@@ -71,6 +71,7 @@
                         <h5 class="card-title" th:text="${entry.key.name}">здесь будет название позиции</h5>
                         <p class="card-text">Цена: <span th:text="${entry.key.price + ' ₽'}">здесь будет цена в рублях</span></p>
                     </div>
+                    <a th:href="@{/products/{id}(id=${entry.key.id})}" class="btn btn-primary">Подробнее</a>
                 </div>
             </div>
         </div>

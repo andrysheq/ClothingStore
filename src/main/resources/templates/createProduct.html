@@ -24,7 +24,7 @@
 <div th:include="blocks/header.html :: header"></div>
 <div class="container py-4">
   <h1 class="text-center">Опубликовать новость</h1>
-  <form method="POST" th:action="@{/product-panel}" th:object="${productForm}" id="productForm" enctype="multipart/form-data">
+  <form method="POST" th:action="@{/products-panel}" th:object="${productForm}" id="productForm" enctype="multipart/form-data">
 
     <div th:if="${#fields.hasErrors('name')}" class="error-message">
       <div class="alert alert-danger" role="alert">
@@ -56,22 +56,38 @@
       </div>
     </div>
 
+    <div th:if="${#fields.hasErrors('gender')}" class="error-message">
+      <div class="alert alert-danger" role="alert">
+        <ul>
+          <li th:text="${#fields.errors('gender')}"></li>
+        </ul>
+      </div>
+    </div>
+
     <div class="mb-3">
       <label for="gender" class="form-label">Пол</label>
-      <select class="form-select" id="gender" name="gender" th:field="${gender}" required>
-        <option value="Мужской">Мужской</option>
-        <option value="Женский">Женский</option>
+      <select class="form-select" id="gender" name="gender" th:field="*{gender}" required>
+        <option value="Мужской" th:selected="${gender == 'Мужской'}">Мужской</option>
+        <option value="Женский" th:selected="${gender == 'Женский'}">Женский</option>
       </select>
+    </div>
+
+    <div th:if="${#fields.hasErrors('category')}" class="error-message">
+      <div class="alert alert-danger" role="alert">
+        <ul>
+          <li th:text="${#fields.errors('category')}"></li>
+        </ul>
+      </div>
     </div>
 
     <div class="mb-3">
       <label for="category" class="form-label">Категория</label>
-      <select class="form-select" id="category" name="category" th:field="${category}" required>
-        <option value="Верхняя одежда">Верхняя одежда</option>
-        <option value="Аксессуары">Аксессуары</option>
-        <option value="Футболки">Футболки</option>
-        <option value="Худи/Cвитшоты">Худи/Cвитшоты</option>
-        <option value="Штаны">Штаны</option>
+      <select class="form-select" id="category" name="category" th:field="*{category}" required>
+        <option value="Верхняя одежда" th:selected="${category == 'Верхняя одежда'}">Верхняя одежда</option>
+        <option value="Аксессуары" th:selected="${category == 'Аксессуары'}">Аксессуары</option>
+        <option value="Футболки" th:selected="${category == 'Футболки'}">Футболки</option>
+        <option value="Худи/Cвитшоты" th:selected="${category == 'Худи/Cвитшоты'}">Худи/Cвитшоты</option>
+        <option value="Штаны" th:selected="${category == 'Штаны'}">Штаны</option>
       </select>
     </div>
 
