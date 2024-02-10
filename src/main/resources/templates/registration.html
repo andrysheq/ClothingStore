@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-bs-theme="dark"
+<html lang="ru"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -13,6 +13,8 @@
       margin-top: 10px;
     }
     body {
+      background-color: #fff;
+      color: #000;
       padding-top: 50px; /* Отступ сверху */
     }
 
@@ -38,7 +40,7 @@
     }
   </style>
 </head>
-<body class="text-bg-dark">
+<body >
 <div class="registration-container">
 <h1 class="text-center">Регистрация</h1>
 <form method="POST" th:action="@{/register}" th:object="${registrationForm}" id="registrationForm" enctype="multipart/form-data">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-bs-theme="dark"
+<html lang="ru"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -9,10 +9,9 @@
     <link rel="stylesheet" href="/static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body , html {
-            /*background-color: #222 !important;*/
-            color: #fff;
-            padding-top: 0px;
+        body{
+            background-color: #fff;
+            color: #000;
         }
         .card-dark {
             background-color: #252a2e; /* светлее чем bg-dark */
@@ -31,7 +30,7 @@
         }
     </style>
 </head>
-<body class="bg-dark font-montserrat">
+<body>
 <div th:include="blocks/header.html :: header"></div>
 
 <div class="container py-4">

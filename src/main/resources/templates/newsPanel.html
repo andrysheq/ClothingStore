@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-bs-theme="dark"
+<html lang="ru"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -9,6 +9,10 @@
     .container {
       /*background-color: #222 !important;*/
       margin-top: 40px;
+    }
+    body{
+      background-color: #fff;
+      color: #000;
     }
     th, td {
       border: 1px solid #dddddd;
@@ -20,7 +24,7 @@
     }
   </style>
 </head>
-<body class="bg-dark font-montserrat">
+<body class="font-montserrat">
 <div th:include="blocks/header.html :: header"></div>
 
 <div class="container font-montserrat">

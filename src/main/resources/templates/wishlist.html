@@ -10,16 +10,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body , html {
-      /*background-color: #222 !important;*/
-      color: #fff;
+      background-color: #fff !important;
+      color: #000;
       padding-top: 0px;
     }
     .card-dark {
-      background-color: #252a2e; /* светлее чем bg-dark */
+      background-color: #fff; /* светлее чем bg-dark */
     }
     .container {
       /*background-color: #222 !important;*/
       margin-top: 40px;
+    }
+    .table thead tr th{
+      background-color: #fff !important;
+      color: #000;
+    }
+    .table tbody tr td{
+      background-color: #fff !important;
+      color: #000;
     }
     /* Дополнительные стили для выравнивания карточек */
     .card {
@@ -31,7 +39,7 @@
     }
   </style>
 </head>
-<body class="bg-dark font-montserrat">
+<body class="font-montserrat">
 <div th:include="blocks/header.html :: header"></div>
 
 <div class="container py-4">

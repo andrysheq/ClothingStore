@@ -10,29 +10,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body , html {
-            /*background-color: #222 !important;*/
-            color: #fff;
-            padding-top: 0px;
+            background-color: #fff !important;
+            color: #000;
+            padding-top: 40px;
         }
         .card-dark {
-            background-color: #252a2e; /* светлее чем bg-dark */
+            background-color: #fff; /* светлее чем bg-dark */
+            color: #000;
+            text-align: center;
         }
         .container {
-            /*background-color: #222 !important;*/
-            margin-top: 40px;
+            background-color: #fff !important;
+            color: #000;
+            padding-top: 40px;
+            padding-bottom: 40px;
         }
         /* Дополнительные стили для выравнивания карточек */
         .card {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            margin-top: 10px;
-            margin-bottom: 10px;
+             background-color: #fff !important;
+             color: #000;
+             display: flex;
+             flex-direction: column;
+            text-decoration: none;
+            height: 100%; /* Фиксированная высота карточки */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавный переход для transform и box-shadow */
+        }
+        .card-title {
+            color: #000;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .card-text {
+            color: #000;
+            margin-top: 40px;
+            text-decoration: none;
+        }
+        .card:hover{
+            transform: scale(1.05); /* Немного увеличиваем карту при наведении */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Добавляем тень */
         }
     </style>
 </head>
 
-<body class="bg-dark font-montserrat">
+<body class="font-montserrat">
     <div th:include="blocks/header.html :: header"></div>
 
 <!--    <script>-->
@@ -64,15 +84,14 @@
         <h1>Вся одежда:</h1>
 
         <div class="row row-cols-1 row-cols-md-3">
-            <div th:each="entry : ${productPhotoMap}" class="col">
-                <div class="card mb-3 h-100 card-dark">
+            <div th:each="entry : ${productPhotoMap}" class="col my-4">
+                <a class="card h-100 my-4" th:href="@{/products/{id}(id=${entry.key.id})}">
                     <img th:if="${entry.value != null}" th:src="|data:image/jpeg;base64,${entry.value}|" class="card-img-top img-fluid rounded" alt="Фото лота">
-                    <div class="card-body d-flex flex-column card-dark">
+                    <div class="d-flex flex-column card-dark">
                         <h5 class="card-title" th:text="${entry.key.name}">здесь будет название позиции</h5>
                         <p class="card-text">Цена: <span th:text="${entry.key.price + ' ₽'}">здесь будет цена в рублях</span></p>
                     </div>
-                    <a th:href="@{/products/{id}(id=${entry.key.id})}" class="btn btn-primary">Подробнее</a>
-                </div>
+                </a>
             </div>
         </div>
     </main>

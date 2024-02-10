@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    position: fixed;
+
     align-items: center;
     padding: 0 8%;
     text-decoration: none;
@@ -16,8 +16,7 @@ body {
 }
 
 header {
-    position: fixed;
-    top: 0;
+    top: 10px;
     left: 0;
     right: 0;
     display: flex;
@@ -25,47 +24,54 @@ header {
     align-items: center;
     padding: 0 8%;
     text-decoration: none;
+    z-index: 1000;
 }
 
 header nav ul li{
     position: relative;
     float: left;
     text-decoration: none;
+    z-index: 1000;
 }
 
 header a{
     text-decoration: none;
-    font-size: 20px;
-    color: #cccccc;
+    font-size: 26px;
+    color: #000000;
+    z-index: 1000;
 }
 
 header nav ul li a {
     padding: 15px;
-    font-size: 16px;
+    font-size: 20px;
     display: block;
-    color: #cccccc;
+    color: #000000;
     text-decoration: none;
+    z-index: 1000;
 }
 
 header nav ul li a:hover{
-    background: #cccccc;
-    color: #252a2e;
+    background: #000000;
+    color: #ffffff;
+    z-index: 1000;
 }
 
 nav ul li ul{
     position: absolute;
     padding-left: 0;
     width: 120%;
-    background: #252a2e;
+    background: #ffffff;
     display: none;
+    z-index: 1000;
 }
 
 nav ul li ul li{
     width: 100%;
-
-    border: 1px solid #252a2e;
+    border: 1px solid #cccccc;
+    z-index: 1000;
 }
 
 nav ul li:hover > ul {
     display: initial;
+    z-index: 1000;
 }
