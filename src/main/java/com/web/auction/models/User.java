@@ -72,6 +72,12 @@ public class User implements UserDetails {
         this.wishList = new WishList();
     }
 
+    public User(String username, String password,String phoneNumber) {
+        this.username = username;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+    }
+
     public User(){
         this.wishList = new WishList();
     }

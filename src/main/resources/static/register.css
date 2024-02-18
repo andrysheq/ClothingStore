@@ -22,3 +22,95 @@
     cursor: pointer; /* Изменить курсор при наведении */
     /* Другие стили */
 }
+.error-message {
+    max-width: 300px; /* Настройте желаемую ширину */
+    margin-top: 10px;
+}
+body {
+    background-color: #fff;
+    color: #000;
+    padding-top: 50px; /* Отступ сверху */
+}
+
+.registration-container {
+    max-width: 400px; /* Максимальная ширина контейнера формы */
+    margin: 0 auto; /* Центрирование контейнера формы */
+    padding: 20px; /* Отступы вокруг контейнера формы */
+}
+
+/* Стили для формы */
+form {
+    display: flex; /* Использование flexbox */
+    flex-direction: column; /* Поля располагаются вертикально */
+}
+
+form label {
+    margin-bottom: 5px; /* Отступ снизу для меток полей */
+}
+
+form input,
+form select {
+    margin-bottom: 10px; /* Отступ снизу для ввода данных */
+}
+
+header h1{
+    font-size: 32px;
+    text-align: center;
+}
+
+header h2{
+    font-size: 16px;
+    text-align: center;
+}
+header h2 a{
+    font-size: 16px;
+    text-decoration: black underline;
+    font-weight: bold;
+}
+header{
+    align-content: center;
+}
+.custom-input {
+    border: 1px solid #cccccc; /* цвет границы */
+    border-radius: 15px; /* закругленные углы */
+    padding: 8px; /* отступ внутри поля ввода */
+    margin-top: 5px; /* отступ сверху */
+}
+.custom-button {
+    background-color: #000; /* цвет фона */
+    color: #fff; /* цвет текста */
+    border: none; /* убираем границу */
+    border-radius: 15px; /* закругляем углы */
+    padding: 10px 20px; /* отступы внутри кнопки */
+    transition: transform 0.3s ease; /* плавное изменение размера при наведении */
+}
+
+.custom-button:hover {
+    transform: scale(1.05); /* увеличение размера при наведении */
+}
+
+.file-input-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 150px; /* Задайте ширину вашего элемента */
+}
+
+.file-input {
+    position: absolute;
+    font-size: 9999px;
+    opacity: 0;
+}
+
+.file-input-label {
+    display: inline-block;
+    background-color:#000; /* Цвет фона кнопки */
+    color: #fff; /* Цвет текста кнопки */
+    padding: 10px 15px; /* Отступы внутри кнопки */
+    border-radius: 15px; /* Закругленные углы */
+    cursor: pointer; /* Изменение курсора при наведении */
+    transition: transform 0.3s ease;
+}
+.file-input-label:hover {
+    transform: scale(1.05); /* Увеличение размера при наведении */
+}
