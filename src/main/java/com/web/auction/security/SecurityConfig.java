@@ -93,26 +93,19 @@ public class SecurityConfig {
 //            @Override
 //            public void run(String... args) throws Exception {
 //
-////                Role adminRole = new Role("ADM", "ROLE_ADMIN");
-////                Role moderatorRole = new Role("MDR", "ROLE_MODERATOR");
-////                Role userRole = new Role("USR", "ROLE_USER");
-////
-////                roleRepo.save(adminRole);
-////                roleRepo.save(moderatorRole);
-////                roleRepo.save(userRole);
-////
-////                User admin = new User("admin1", encoder.encode("Root!@1"),
-////                        "Andrey Admin", "123 North Street", "Cross Roads", "TX",
-////                        "76227", "123-123-1234");
-////                admin.addRole(roleRepo.findById("ADM"));
-////
-////                User moderator = new User("moderator1", encoder.encode("Root!@1"),
-////                        "Andrey Moderator", "123 North Street", "Cross Roads", "TX",
-////                        "76227", "123-123-1234");
-////                moderator.addRole(roleRepo.findById("MDR"));
-////
-////                userRepo.save(admin);
-////                userRepo.save(moderator);
+
+//                User admin = new User("admin", encoder.encode("root"),
+//                        "Andrey Admin", "123 North Street", "Cross Roads", "TX",
+//                        "76227", "123-123-1234");
+//                admin.addRole(roleRepo.findById("ADM"));
+//
+//                User moderator = new User("moderator", encoder.encode("root"),
+//                        "Andrey Moderator", "123 North Street", "Cross Roads", "TX",
+//                        "76227", "123-123-1234");
+//                moderator.addRole(roleRepo.findById("MDR"));
+//
+//                userRepo.save(admin);
+//                userRepo.save(moderator);
 //
 //            }
 //        };

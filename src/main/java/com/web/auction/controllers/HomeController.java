@@ -1,8 +1,8 @@
 package com.web.auction.controllers;
 
-import com.web.auction.data.LotRepository;
+import com.web.auction.data.ProductRepository;
 import com.web.auction.data.VisitRepository;
-import com.web.auction.models.Lot;
+import com.web.auction.models.Product;
 import com.web.auction.models.User;
 import com.web.auction.models.Visit;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,35 +23,28 @@ import java.util.Map;
 @Controller
 @RequestMapping("/")
 public class HomeController {
-    private VisitRepository visitRepo;
-    private LotRepository lotRepo;
+    private ProductRepository productRepo;
     @GetMapping
     public String home(Model model) {
-        Visit newVisit = new Visit();
-        visitRepo.save(newVisit);
 
-        Long visitCount = visitRepo.count();
-        model.addAttribute("visitCount",String.valueOf(visitCount));
+        List<Product> products = productRepo.findAll();
+        Map<Product, String> productPhotoMap = new HashMap<>();
 
-        List<Lot> lots = lotRepo.findAllByOrderByPlacedAtDesc();
-        Map<Lot, String> lotPhotoMap = new HashMap<>();
-
-        for (Lot lot : lots) {
-            byte[] photoBytes = lot.getPhotoOfLot();
+        for (Product product : products) {
+            byte[] photoBytes = product.getPhotoOfProduct();
             String photoBase64 = Base64.getEncoder().encodeToString(photoBytes);
-            lotPhotoMap.put(lot, photoBase64);
+            productPhotoMap.put(product, photoBase64);
         }
 
-        model.addAttribute("lots", lots);
-        model.addAttribute("lotPhotoMap", lotPhotoMap);
-
+        model.addAttribute("products", products);
+        model.addAttribute("productPhotoMap", productPhotoMap);
         return "home";
     }
 
     @Autowired
-    public HomeController(VisitRepository visitRepo, LotRepository lotRepo) {
-        this.visitRepo = visitRepo;
-        this.lotRepo = lotRepo;
+
+    public HomeController(ProductRepository productRepo) {
+        this.productRepo = productRepo;
 
 //        Visit newVisit = new Visit();
 //        visitRepo.save(newVisit);

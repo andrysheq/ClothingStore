@@ -1,5 +1,9 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="ru" data-bs-theme="dark"
+=======
+<html lang="ru"
+>>>>>>> origin/additional
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -11,11 +15,22 @@
       /*background-color: #222 !important;*/
       margin-top: 40px;
     }
+<<<<<<< HEAD
+=======
+    body{
+      background-color: #fff;
+      color: #000;
+    }
+>>>>>>> origin/additional
   </style>
 </head>
 
 
+<<<<<<< HEAD
 <body class="bg-dark font-montserrat">
+=======
+<body class="font-montserrat">
+>>>>>>> origin/additional
 <div th:include="blocks/header.html :: header"></div>
 
 <div class="container font-montserrat">
@@ -23,7 +38,15 @@
   <h1>Ваши данные модератора</h1>
   <ul class="nav nav-tabs">
     <li class="nav-item">
+<<<<<<< HEAD
       <a class="nav-link" th:href="@{/moderator-panel}">Панель модератора</a>
+=======
+      <a class="nav-link" th:href="@{/news-panel}">Панель работы с новостями</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/products-panel}">Панель работы с товарами</a>
+>>>>>>> origin/additional
     </li>
   </ul>
   <table class="table">

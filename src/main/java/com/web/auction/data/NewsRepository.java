@@ -1,6 +1,4 @@
 package com.web.auction.data;
-
-import com.web.auction.models.Lot;
 import com.web.auction.models.News;
 import com.web.auction.models.User;
 import org.springframework.data.repository.CrudRepository;
