@@ -10,26 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body , html {
-<<<<<<< HEAD
-            /*background-color: #222 !important;*/
-            color: #fff;
-            padding-top: 0px;
-        }
-        .card-dark {
-            background-color: #252a2e; /* светлее чем bg-dark */
-        }
-        .container {
-            /*background-color: #222 !important;*/
-            margin-top: 40px;
-        }
-        /* Дополнительные стили для выравнивания карточек */
-        .card {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            margin-top: 10px;
-            margin-bottom: 10px;
-=======
             background-color: #fff !important;
             color: #000;
             padding-top: 40px;
@@ -68,58 +48,10 @@
         .card:hover{
             transform: scale(1.05); /* Немного увеличиваем карту при наведении */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Добавляем тень */
->>>>>>> origin/additional
         }
     </style>
 </head>
 
-<<<<<<< HEAD
-<body class="bg-dark font-montserrat">
-    <div th:include="blocks/header.html :: header"></div>
-
-    <script>
-        function updateTime() {
-            const evtSource = new EventSource('/time');
-            evtSource.onmessage = function (event) {
-                document.getElementById('clock').innerText = event.data;
-            };
-
-            evtSource.onerror = function (event) {
-                evtSource.close();
-            };
-        }
-
-        setInterval(updateTime, 1000);
-    </script>
-
-    <main class="container font-montserrat">
-        <div class="container d-flex justify-content-between font-montserrat">
-            <div>
-                <p>Всего посещений:<h1 th:text="${visitCount}">counter</h1></p>
-            </div>
-            <div>
-                <p>Текущее время: <span id="clock"></span></p>
-            </div>
-        </div>
-
-
-        <h1>Все лоты:</h1>
-
-        <div class="row row-cols-1 row-cols-md-3">
-            <div th:each="entry : ${lotPhotoMap}" class="col">
-                <div class="card mb-3 h-100 card-dark">
-                    <img th:if="${entry.value != null}" th:src="|data:image/jpeg;base64,${entry.value}|" class="card-img-top img-fluid rounded" alt="Фото лота">
-                    <div class="card-body d-flex flex-column card-dark">
-                        <h5 class="card-title" th:text="${entry.key.nameOfLot}">здесь будет название города</h5>
-                        <p class="card-text">Цена: <span th:text="${entry.key.price + ' ₽'}">здесь будет цена в рублях</span></p>
-                        <p class="card-text">Логин продавца: <span th:text="${entry.key.user.username}">здесь будет логин продавца</span></p>
-                        <p class="card-text">Имя продавца: <span th:text="${entry.key.user.fullName}">здесь будет имя продавца</span></p>
-                        <p class="card-text">Город продавца: <span th:text="${entry.key.city}">здесь будет название города продавца</span></p>
-                        <p class="card-text">Улица продавца: <span th:text="${entry.key.street}">здесь будет название улицы продавца</span></p>
-
-                    </div>
-                </div>
-=======
 <body class="font-montserrat">
     <div th:include="blocks/header.html :: header"></div>
 
@@ -160,7 +92,6 @@
                         <p class="card-text">Цена: <span th:text="${entry.key.price + ' ₽'}">здесь будет цена в рублях</span></p>
                     </div>
                 </a>
->>>>>>> origin/additional
             </div>
         </div>
     </main>

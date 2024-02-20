@@ -1,9 +1,27 @@
-.form-signin{
-    padding-right: 35%;
-    padding-left: 35%;
-    padding-top: 15%;
+
+.error-message {
+    max-width: 300px; /* Настройте желаемую ширину */
+    margin-top: 10px;
 }
 
-.btn-signin{
-    padding-top: 15px;
+.login-container {
+    max-width: 400px; /* Максимальная ширина контейнера формы */
+    margin: 0 auto; /* Центрирование контейнера формы */
+    /* Отступы вокруг контейнера формы */
+    padding: 50px 20px 20px;
+}
+
+/* Стили для формы */
+form {
+    display: flex; /* Использование flexbox */
+    flex-direction: column; /* Поля располагаются вертикально */
+}
+
+form label {
+    margin-bottom: 5px; /* Отступ снизу для меток полей */
+}
+
+form input,
+form select {
+    margin-bottom: 10px; /* Отступ снизу для ввода данных */
 }
