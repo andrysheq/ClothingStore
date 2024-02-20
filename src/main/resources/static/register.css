@@ -21,9 +21,6 @@
     border: none; /* Убрать границу */
     cursor: pointer; /* Изменить курсор при наведении */
     /* Другие стили */
-<<<<<<< HEAD
-}
-=======
 }
 .error-message {
     max-width: 300px; /* Настройте желаемую ширину */
@@ -69,6 +66,7 @@ header h2 a{
     font-size: 16px;
     text-decoration: black underline;
     font-weight: bold;
+    color: black;
 }
 header{
     align-content: center;
@@ -117,4 +115,3 @@ header{
 .file-input-label:hover {
     transform: scale(1.05); /* Увеличение размера при наведении */
 }
->>>>>>> origin/additional
