@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/cart")
 public class CartController {
@@ -30,6 +35,13 @@ public class CartController {
     @GetMapping
     public String viewCart(Model model, @AuthenticationPrincipal User user) {
         User currentUser = userRepo.findByUsername(user.getUsername());
+        Map<CartItem, String> cartListWithPhoto = new HashMap<>();
+        List<CartItem> cart = cartRepository.findAllByUser(currentUser);
+        for (CartItem product : cart) {
+            byte[] photoBytes = product.getProduct().getPhotoOfProduct();
+            String photoBase64 = Base64.getEncoder().encodeToString(photoBytes);
+            cartListWithPhoto.put(product, photoBase64);
+        }
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("cartItems", cartRepository.findAllByUser(currentUser));
         return "cart";
