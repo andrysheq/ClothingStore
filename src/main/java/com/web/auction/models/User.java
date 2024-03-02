@@ -46,8 +46,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private WishList wishList = new WishList();
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+//    private WishList wishList = new WishList();
 
     public User(String username, String fullName, String street, String city, String state, String zip, String phoneNumber) {
         this.username = username;
@@ -57,7 +57,7 @@ public class User implements UserDetails {
         this.state = state;
         this.zip = zip;
         this.phoneNumber = phoneNumber;
-        this.wishList = new WishList();
+        //this.wishList = new WishList();
     }
 
     public User(String username, String password, String fullName, String street, String city, String state, String zip, String phoneNumber) {
@@ -69,7 +69,7 @@ public class User implements UserDetails {
         this.state = state;
         this.zip = zip;
         this.phoneNumber = phoneNumber;
-        this.wishList = new WishList();
+        //this.wishList = new WishList();
     }
 
     public User(String username, String password,String phoneNumber) {
@@ -78,8 +78,12 @@ public class User implements UserDetails {
         this.phoneNumber = phoneNumber;
     }
 
-    public User(){
-        this.wishList = new WishList();
+//    public User(){
+//        this.wishList = new WishList();
+//    }
+
+        public User(){
+
     }
     // Добавьте методы для управления ролями, например, добавление/удаление
     public void addRole(Role role) {
