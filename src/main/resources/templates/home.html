@@ -16,12 +16,12 @@
         <h1>Вся одежда:</h1>
 
         <div class="row row-cols-1 row-cols-md-3">
-            <div th:each="entry : ${productPhotoMap}" class="col my-4">
-                <a class="card h-100 my-4" th:href="@{/products/{id}(id=${entry.key.id})}">
-                    <img th:if="${entry.value != null}" th:src="|data:image/jpeg;base64,${entry.value}|" class="card-img-top img-fluid rounded" alt="Фото лота">
+            <div th:each="product : ${products}" class="col my-4">
+                <a class="card h-100 my-4" th:href="@{/products/{id}(id=${product.getId()})}">
+                    <img th:if="${product.getPhotoToHtml() != null}" th:src="|data:image/jpeg;base64,${product.getPhotoToHtml()}|" class="card-img-top img-fluid rounded" alt="Фото лота">
                     <div class="d-flex flex-column card-dark">
-                        <h5 class="card-title" th:text="${entry.key.name}">здесь будет название позиции</h5>
-                        <p class="card-text">Цена: <span th:text="${entry.key.price + ' ₽'}">здесь будет цена в рублях</span></p>
+                        <h5 class="card-title" th:text="${product.getName()}">здесь будет название позиции</h5>
+                        <p class="card-text">Цена: <span th:text="${product.getPrice() + ' ₽'}">здесь будет цена в рублях</span></p>
                     </div>
                 </a>
             </div>

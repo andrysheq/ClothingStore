@@ -49,74 +49,11 @@
   <label for="password">Пароль (не менее 8 знаков, минимум одна заглавная буква, цифра и специальный знак.): </label>
   <input class="custom-input" type="password" name="password" id="password" th:value="${registrationForm.password}"/><br/>
 
-<!--  <div th:if="${#fields.hasErrors('passwordMatching')}" class="error-message">-->
-<!--    <div class="alert alert-danger" role="alert">-->
-<!--      <ul>-->
-<!--        <li th:text="${#fields.errors('passwordMatching')}"></li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--  <label for="confirmPassword">Подтвердите пароль: </label>-->
-<!--  <input class="custom-input" type="password" name="confirmPassword" id="confirmPassword" th:value="${registrationForm.confirmPassword}"/><br/>-->
-
-<!--  <div th:if="${#fields.hasErrors('fullName')}" class="error-message">-->
-<!--    <div class="alert alert-danger" role="alert">-->
-<!--      <ul>-->
-<!--        <li th:text="${#fields.errors('fullName')}"></li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <label for="fullName">Ваше имя: </label>-->
-<!--  <input class="custom-input" type="text" name="fullName" id="fullName" th:value="${registrationForm.fullName}"/><br/>-->
-
-<!--  <div th:if="${#fields.hasErrors('street')}" class="error-message">-->
-<!--    <div class="alert alert-danger" role="alert">-->
-<!--      <ul>-->
-<!--        <li th:text="${#fields.errors('street')}"></li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <label for="street">Улица: </label>-->
-<!--  <input class="custom-input" type="text" name="street" id="street" th:value="${registrationForm.street}"/><br/>-->
-
-<!--  <div th:if="${#fields.hasErrors('city')}" class="error-message">-->
-<!--    <div class="alert alert-danger" role="alert">-->
-<!--      <ul>-->
-<!--        <li th:text="${#fields.errors('city')}"></li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <label for="city">Город: </label>-->
-<!--  <input class="custom-input" type="text" name="city" id="city" th:value="${registrationForm.city}"/><br/>-->
-
-<!--  <div th:if="${#fields.hasErrors('state')}" class="error-message">-->
-<!--    <div class="alert alert-danger" role="alert">-->
-<!--      <ul>-->
-<!--        <li th:text="${#fields.errors('state')}"></li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <label for="state">Область: </label>-->
-<!--  <input class="custom-input" type="text" name="state" id="state" th:value="${registrationForm.state}"/><br/>-->
-
-<!--  <div th:if="${#fields.hasErrors('zip')}" class="error-message">-->
-<!--    <div class="alert alert-danger" role="alert">-->
-<!--      <ul>-->
-<!--        <li th:text="${#fields.errors('zip')}"></li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <label for="zip">Индекс: </label>-->
-<!--  <input class="custom-input" type="text" name="zip" id="zip" th:value="${registrationForm.zip}"/><br/>-->
-
-
   <label for="photo">Фото: </label>
   <div class="file-input-wrapper">
     <input type="file" name="photo" id="photo" class="file-input" />
     <label for="photo" class="file-input-label">Выбрать файл</label>
   </div>
-<!--  <input type="file" name="photo" id="photo" /><br/> &lt;!&ndash; Поле для загрузки фото &ndash;&gt;-->
 
   <input class="custom-button" type="submit" value="Зарегистрироваться"/>
 </form>

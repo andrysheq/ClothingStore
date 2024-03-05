@@ -5,9 +5,6 @@ import com.web.auction.models.Lot;
 import com.web.auction.models.LotForm;
 import com.web.auction.models.LotProps;
 import com.web.auction.models.User;
-import com.web.auction.security.RegistrationForm;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -19,8 +16,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.util.*;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.web.auction.models.LotForm.getLotFormWithLot;
 
@@ -43,13 +42,6 @@ public class LotController {
     @GetMapping("/current")
     public String orderForm(Model model,@AuthenticationPrincipal User user,
                             @ModelAttribute Lot lot) {
-
-//        if (lot.getStreet() == null) {
-//            lot.setStreet(user.getStreet());
-//        }
-//        if (lot.getCity() == null) {
-//            lot.setCity(user.getCity());
-//        }
 
         model.addAttribute("lotForm", form);
         return "createLot";
@@ -129,19 +121,6 @@ public class LotController {
             model.addAttribute("lot", lot);
             return "editLot";
         }
-
-//        try {
-//            if(photo.getSize() <= 0) {
-//                result.rejectValue("photo", "photoNotAdded", "Вы не загрузили фото лота");
-//                model.addAttribute("lotForm", form);
-//                Lot lot = lotRepo.findLotById(id);
-//                model.addAttribute("lot", lot);
-//                return "editLot";
-//            }
-//            form.setPhoto(photo); // сохранить фото в объекте RegistrationForm
-//        } catch (Exception e) {
-//            return "redirect:/lots/{id}/edit?error";
-//        }
         Lot lotToUpdate = form.toLot();
         try {
             if(photo.getSize() > 0) {

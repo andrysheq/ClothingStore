@@ -77,11 +77,11 @@ public class ProductController {
             wishList.setUser(currentUser);
         }
 
-        boolean alreadyExists = wishList.getProducts().stream()
-                .anyMatch(p -> p.getId().equals(productId));
+        boolean alreadyExists = wishList.getWishList().stream()
+                .anyMatch(p -> p.equals(productId));
 
         if(!alreadyExists) {
-            wishList.add(product);
+            wishList.addProductId(product.getId());
             wishListRepository.save(wishList);
         }
 
@@ -91,16 +91,16 @@ public class ProductController {
     @PostMapping("/add/{productId}")
     public String addToCart(@PathVariable Long productId, @AuthenticationPrincipal User user, Model model,
                             @ModelAttribute("quantity") String quantity) {
-        Product product = productRepo.findProductById(productId);
         User currentUser = userRepo.findByUsername(user.getUsername());
-
-        CartItem cartItem = new CartItem();
-        cartItem.setUser(currentUser);
-        cartItem.setProduct(product);
-        cartItem.setQuantity(Integer.parseInt(quantity)); // Или любое другое начальное количество
-
-        cartRepo.save(cartItem);
-
+        Cart userCart = cartRepo.findByUser(currentUser);
+        if(userCart!=null) {
+            userCart.addToCart(productId, Integer.parseInt(quantity));
+        }else{
+            userCart = new Cart();
+            userCart.addToCart(productId, Integer.parseInt(quantity));
+            userCart.setUser(currentUser);
+        }
+        cartRepo.save(userCart);
         return "redirect:/";
     }
 }

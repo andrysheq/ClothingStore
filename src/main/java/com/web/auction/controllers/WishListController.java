@@ -1,6 +1,5 @@
 package com.web.auction.controllers;
 
-import com.web.auction.data.CartRepository;
 import com.web.auction.data.ProductRepository;
 import com.web.auction.data.UserRepository;
 import com.web.auction.data.WishListRepository;
@@ -12,10 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/wishlist")
@@ -31,17 +27,13 @@ public class WishListController {
     }
 
     @GetMapping
-    public String viewCart(Model model, @AuthenticationPrincipal User user) {
+    public String viewWishList(Model model, @AuthenticationPrincipal User user) {
         User currentUser = userRepo.findByUsername(user.getUsername());
-        Map<Product, String> wishListWithPhoto = new HashMap<>();
-        List<Product> wishList = wishListRepository.findByUser(currentUser).getProducts();
-        for (Product product : wishList) {
-            byte[] photoBytes = product.getPhotoOfProduct();
-            String photoBase64 = Base64.getEncoder().encodeToString(photoBytes);
-            wishListWithPhoto.put(product, photoBase64);
-        }
+        List<Product> wishList = new ArrayList<>();
+        Set<Long> wishListIds = wishListRepository.findByUser(currentUser).getWishList();
+        wishListIds.forEach(o->wishList.add(productRepo.findProductById(o)));
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("wishListItemsMap",wishListWithPhoto);
+        model.addAttribute("wishList",wishList);
         return "wishlist";
     }
 }

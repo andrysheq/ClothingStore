@@ -3,7 +3,7 @@ package com.web.auction.controllers;
 import com.web.auction.data.CartRepository;
 import com.web.auction.data.ProductRepository;
 import com.web.auction.data.UserRepository;
-import com.web.auction.models.CartItem;
+import com.web.auction.models.Cart;
 import com.web.auction.models.Product;
 import com.web.auction.models.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,56 +29,46 @@ public class CartController {
     @GetMapping
     public String viewCart(Model model, @AuthenticationPrincipal User user) {
         User currentUser = userRepo.findByUsername(user.getUsername());
-        Map<CartItem, String> cartListWithPhoto = new HashMap<>();
-        List<CartItem> cart = cartRepository.findAllByUser(currentUser);
-        for (CartItem product : cart) {
-            byte[] photoBytes = product.getProduct().getPhotoOfProduct();
-            String photoBase64 = Base64.getEncoder().encodeToString(photoBytes);
-            cartListWithPhoto.put(product, photoBase64);
+        Map<Product, Integer> cartListWithQuantity = new HashMap<>();
+        Cart cart = cartRepository.findByUser(currentUser);
+        if(cart!=null) {
+            Map<Long, Integer> cartMap = cart.getCart();
+            cartMap.forEach((productId, quantity) -> {
+                cartListWithQuantity.put(productRepo.findProductById(productId), quantity);
+            });
+        }else{
+            cart = new Cart(currentUser);
+            cartRepository.save(cart);
         }
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("cartItems", cartListWithPhoto);
+        model.addAttribute("cartItems", cartListWithQuantity);
         return "cart";
     }
 
     @PostMapping("/delete/{cartItemId}")
     public String deleteFromCart(@AuthenticationPrincipal User user,@PathVariable Long cartItemId){
         User currentUser = userRepo.findByUsername(user.getUsername());
-        List<CartItem> cart = cartRepository.findAllByUser(currentUser);
-        Iterator<CartItem> iterator = cart.iterator();
-        while (iterator.hasNext()) {
-            CartItem cartItem = iterator.next();
-            if (cartItem.getProduct().getId().equals(cartItemId)) {
-                iterator.remove();
-                cartRepository.delete(cartItem); // Опционально, если нужно также удалить элемент из базы данных
-            }
-        }
+        Cart userCart = cartRepository.findByUser(currentUser);
+        userCart.deleteFromCart(cartItemId);
+        cartRepository.save(userCart);
         return "redirect:/cart";
     }
 
     @PostMapping("/increase/{cartItemId}")
     public String degreaseCartItemQuantity(@AuthenticationPrincipal User user,@PathVariable Long cartItemId){
         User currentUser = userRepo.findByUsername(user.getUsername());
-        List<CartItem> cart = cartRepository.findAllByUser(currentUser);
-        cart.forEach(o->{
-            if(o.getProduct().getId().equals(cartItemId)){
-                o.setQuantity(o.getQuantity()+1);
-                cartRepository.save(o);
-            }
-        });
+        Cart userCart = cartRepository.findByUser(currentUser);
+        userCart.degreaseItemQuantity(cartItemId);
+        cartRepository.save(userCart);
         return "redirect:/cart";
     }
 
     @PostMapping("/degrease/{cartItemId}")
     public String increaseCartItemQuantity(@AuthenticationPrincipal User user,@PathVariable Long cartItemId){
         User currentUser = userRepo.findByUsername(user.getUsername());
-        List<CartItem> cart = cartRepository.findAllByUser(currentUser);
-        cart.forEach(o->{
-            if(o.getProduct().getId().equals(cartItemId)){
-                o.setQuantity(o.getQuantity()-1);
-                cartRepository.save(o);
-            }
-        });
+        Cart userCart = cartRepository.findByUser(currentUser);
+        userCart.increaseItemQuantity(cartItemId);
+        cartRepository.save(userCart);
         return "redirect:/cart";
     }
 }

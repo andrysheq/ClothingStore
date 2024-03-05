@@ -1,20 +1,15 @@
 package com.web.auction.models;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -41,13 +36,10 @@ public class User implements UserDetails {
     private String phoneNumber;
     private byte[] photo;
     private boolean accountNonLocked;
+//    @OneToOne(mappedBy = "user")
+//    private Cart cart;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> cartItems = new ArrayList<>();
-
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-//    private WishList wishList = new WishList();
 
     public User(String username, String fullName, String street, String city, String state, String zip, String phoneNumber) {
         this.username = username;
@@ -57,7 +49,6 @@ public class User implements UserDetails {
         this.state = state;
         this.zip = zip;
         this.phoneNumber = phoneNumber;
-        //this.wishList = new WishList();
     }
 
     public User(String username, String password, String fullName, String street, String city, String state, String zip, String phoneNumber) {
@@ -69,19 +60,12 @@ public class User implements UserDetails {
         this.state = state;
         this.zip = zip;
         this.phoneNumber = phoneNumber;
-        //this.wishList = new WishList();
     }
-
     public User(String username, String password,String phoneNumber) {
         this.username = username;
         this.password = password;
         this.phoneNumber = phoneNumber;
     }
-
-//    public User(){
-//        this.wishList = new WishList();
-//    }
-
         public User(){
 
     }

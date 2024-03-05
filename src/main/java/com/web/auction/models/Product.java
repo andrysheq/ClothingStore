@@ -2,11 +2,12 @@ package com.web.auction.models;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.Base64;
 
 @Data
 @Entity
@@ -21,8 +22,6 @@ public class Product implements Serializable {
 
     }
     private static final long serialVersionUID = 1L;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> cartItems = new ArrayList<>();
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
@@ -31,4 +30,7 @@ public class Product implements Serializable {
     private String gender;
     private String category;
     private byte[] photoOfProduct;
+    public String getPhotoToHtml() {
+        return Base64.getEncoder().encodeToString(photoOfProduct);
+    }
 }

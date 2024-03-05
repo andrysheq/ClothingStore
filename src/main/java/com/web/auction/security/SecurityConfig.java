@@ -1,25 +1,17 @@
 package com.web.auction.security;
 
-import com.web.auction.data.RoleRepository;
 import com.web.auction.data.UserRepository;
-import com.web.auction.models.Role;
 import com.web.auction.models.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @Configuration
 @EnableWebSecurity
@@ -38,38 +30,12 @@ public class SecurityConfig {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-//                .successHandler((request, response, authentication) -> {
-//                    if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
-//                        response.sendRedirect("/account/admin");
-//                    } else {
-//                        response.sendRedirect("/account/user");
-//                    }
-//                })
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
-                // Make H2-Console non-secured; for debug purposes
-//                .and()
-//                .csrf()
-//                .ignoringAntMatchers("/h2-console/**")
-//
-//                // Allow pages to be loaded in frames from the same origin; needed for H2-Console
-//                .and()
-//                .headers()
-//                .frameOptions()
-//                .sameOrigin()
-
                 .and()
                 .build();
     }
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("admin").password("{noop}admin").roles("ADMIN")
-//                .and()
-//                .withUser("moderator").password("{noop}moderator").roles("MODERATOR");
-//    }
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepo) {
         return username -> {

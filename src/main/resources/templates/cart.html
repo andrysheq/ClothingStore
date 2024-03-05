@@ -83,22 +83,22 @@
         <tr th:each="entry : ${cartItems}">
             <td>
                 <a th:href="@{/products/{id}(id=${entry.key.id})}">
-                    <img class="product-image" th:if="${entry.value != null}" th:src="|data:image/jpeg;base64,${entry.value}|" alt="Фото лота">
+                    <img class="product-image" th:if="${entry.key.getPhotoToHtml() != null}" th:src="|data:image/jpeg;base64,${entry.key.getPhotoToHtml()}|" alt="Фото лота">
                 </a>
             </td>
-            <td th:text="${entry.key.getProduct().name}"></td>
-            <td th:text="${entry.key.getProduct().price}"></td>
-            <td th:text="${entry.key.quantity}"></td>
-            <td th:text="${entry.key.getProduct().price} * ${entry.key.quantity}"></td>
-            <td><form class="delete-button" th:action="@{/cart/delete/{cartItemId}(cartItemId=${entry.key.getProduct().getId()})}" method="post">
+            <td th:text="${entry.key.getName()}"></td>
+            <td th:text="${entry.key.getPrice()}"></td>
+            <td th:text="${entry.value}"></td>
+            <td th:text="${entry.key.getPrice()} * ${entry.value}"></td>
+            <td><form class="delete-button" th:action="@{/cart/delete/{cartItemId}(cartItemId=${entry.key.getId()})}" method="post">
                 <input type="hidden" name="_method" value="delete">
                 <button class="delete-button" type="submit">&#10006;</button>
             </form></td>
-            <td><form class="delete-button" th:action="@{/cart/increase/{cartItemId}(cartItemId=${entry.key.getProduct().getId()})}" method="post">
+            <td><form class="delete-button" th:action="@{/cart/increase/{cartItemId}(cartItemId=${entry.key.getId()})}" method="post">
                 <input type="hidden" name="_method" value="increase">
                 <button class="delete-button" type="submit">+</button>
             </form></td>
-            <td><form class="delete-button" th:action="@{/cart/degrease/{cartItemId}(cartItemId=${entry.key.getProduct().getId()})}" method="post">
+            <td><form class="delete-button" th:action="@{/cart/degrease/{cartItemId}(cartItemId=${entry.key.getId()})}" method="post">
                 <input type="hidden" name="_method" value="degrease">
                 <button class="delete-button" type="submit">-</button>
             </form></td>
