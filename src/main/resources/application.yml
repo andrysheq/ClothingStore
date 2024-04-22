@@ -9,7 +9,7 @@ spring.thymeleaf.cache:
   true
 
 spring.datasource.url:
-  jdbc:mysql://localhost:8889/db_auction
+  jdbc:mysql://localhost:3306/db_auction
 spring.datasource.username:
   root
 spring.datasource.password:
