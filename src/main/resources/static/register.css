@@ -66,6 +66,7 @@ header h2 a{
     font-size: 16px;
     text-decoration: black underline;
     font-weight: bold;
+    color: black;
 }
 header{
     align-content: center;

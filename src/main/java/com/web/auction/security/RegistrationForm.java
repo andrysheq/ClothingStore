@@ -2,15 +2,11 @@ package com.web.auction.security;
 
 import com.web.auction.data.RoleRepository;
 import com.web.auction.data.UserRepository;
-import com.web.auction.models.Role;
 import com.web.auction.models.User;
 import lombok.Data;
-import javax.validation.constraints.AssertTrue;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
@@ -29,6 +25,7 @@ public class RegistrationForm {
     private String username;
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$", message = "Некорректный формат пароля")
     private String password;
+
 //    @NotBlank(message="Поле 'Имя' не может быть пустым")
 //    private String fullName;
 //    @NotBlank(message="Поле 'Улица' не может быть пустым")
@@ -45,6 +42,7 @@ public class RegistrationForm {
     public RegistrationForm(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
 
 //    public User toUser(PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
 //        User user = new User(
@@ -72,6 +70,7 @@ public class RegistrationForm {
         user.setAccountNonLocked(true);
         return user;
     }
+
 
 //    @AssertTrue(message = "Пароли должны совпадать")
 //    public boolean isPasswordMatching() {

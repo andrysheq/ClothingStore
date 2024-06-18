@@ -1,23 +1,15 @@
 package com.web.auction.controllers;
 
 import com.web.auction.data.NewsRepository;
-import com.web.auction.models.*;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import com.web.auction.models.News;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
-import java.util.Base64;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 
 @Component
 @Controller
